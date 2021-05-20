@@ -28,6 +28,14 @@ contract Faculty is AccessControl {
       courses.push(newCourse);
   }
   
+  /*
+  As it is, the function can fail if it doesn't have enough ETH in its balance and so
+  if this happens, some eligible students might not receive their rewards and also they'd get
+  wiped from the eligible list. A better approach would be to seperate the concerns, having a 
+  function to retrieve the eligible list ( and counting every eligible student from all courses
+  then checking if that number times amountForEach is smaller than the balance) and a different 
+  function that resets the eligible list of students.
+  */
   function sendRewards(uint amountForEach) public onlyAdmin {
       uint courseLength = courses.length;
       
